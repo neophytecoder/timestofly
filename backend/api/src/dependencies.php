@@ -17,3 +17,20 @@ $container['renderer'] = function ($c) {
 //     $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
 //     return $logger;
 // };
+
+// Service factory for the PDO
+$container['db'] = function ($c) {
+    $db = $c['settings']['db'];
+    $servername = $db['host'];
+    $dbname = $db['database'];
+    $username = $db['username'];
+    $password = $db['password'];
+    $port = $db['port'];
+    $unixSocket = $db['unix_socket'];
+
+    $pdo = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;unix_socket=$unixSocket",
+    $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    return $pdo;
+};

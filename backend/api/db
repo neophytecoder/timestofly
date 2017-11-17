@@ -1,0 +1,7 @@
+create database  timestofly;
+
+use timestofly;
+
+CREATE TABLE USER (username VARCHAR(20) primary key, password VARCHAR(20) NOT NULL, tokenId VARCHAR(20), start int(11), expired int(11));
+
+insert into USER values('admin', 'admin', NULL, NULL, NULL);
