@@ -317,3 +317,15 @@ label {
 .full-underline {
   border-bottom: 2px solid black;
 }
+
+.black-link {
+  color: black;
+}
+
+.black-link.active {
+  color: gray;
+}
+
+.black-link:hover {
+  color: gray;
+}

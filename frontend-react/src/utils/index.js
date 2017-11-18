@@ -19,6 +19,6 @@ export const makeUniqueId = (length, posts) => {
 }
 
 export const timeStampToDate = (timestamp) => {
-  var d = new Date(timestamp);
+  var d = new Date(timestamp*1000);
   return sprintf("%02d/%02d/%2d", d.getDate(), d.getMonth() + 1, d.getFullYear());
 }

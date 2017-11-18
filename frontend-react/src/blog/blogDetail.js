@@ -6,6 +6,8 @@ import NavComponent from '../nav';
 import Footer from '../footer';
 import {SideBar} from './sidebar';
 import Awesome from '../ui/awesome';
+import { timeStampToDate } from '../utils';
+import { host } from '../constants';
 
 import '../assets/css/content.css';
 import '../assets/css/footer.css';
@@ -42,7 +44,7 @@ class BlogDetailComponent extends Component {
                   <div style={{fontSize: '14pt'}}>
                     <div className='row mb-1'>
                       <div className='col-6'>
-                        {blog.posted}
+                        {timeStampToDate(blog.posted)}
                       </div>
                       <div className='col-6 text-right'>
                         <img src={facebook} alt="facebook" className="px-2" />
@@ -51,10 +53,11 @@ class BlogDetailComponent extends Component {
                       </div>
                     </div>
                   </div>
-                  <img src={image} className='img-fluid' />
+                  {blog.mediaurl && <img className="img-fluid" src={`${host}${blog.mediaurl}`} />}
+                  {!blog.mediaurl && <img className="img-fluid" src={image} />}
                   <div className="w-100"></div>
-                  <div className='font-sz-12 pt-4'>
-                    {blog.content}
+                  <div className='font-sz-12 pt-4' dangerouslySetInnerHTML={{__html: blog.content}}>
+
                   </div>
                 </div>
                 <div className="col-4">
@@ -76,7 +79,7 @@ class BlogDetailComponent extends Component {
 
 const mapStateToProps = (state, props) => {
   console.log(state.blogs, props.match.params.blogid);
-  const blogs = state.blogs.filter(blog => blog.image === props.match.params.blogid);
+  const blogs = state.blogs.filter(blog => blog.blogid === props.match.params.blogid);
   return {blogs, ...props, allBlogs: state.blogs};
 }
 
