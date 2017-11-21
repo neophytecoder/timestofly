@@ -1,0 +1,33 @@
+.footer {
+  height: 10rem;
+  background-color: black;
+  color: white;
+  font-size: 0.5rem;
+  font-family: "Lato";
+  position: sticky;
+}
+
+.footer.fixed-bottom {
+  position: fixed;
+  bottom: 0;
+}
+
+.container-fluid {
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+.Copyright_©_timestofly_com {
+  font-size: 0.4rem;
+  font-family: "Lato";
+}
+.Socmed {
+  margin-top: 1rem;
+  padding: 0.5rem;
+}
+
+html, body {
+  width: 100%
+}

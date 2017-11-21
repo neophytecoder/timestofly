@@ -10,6 +10,7 @@ use Slim\Http\Response;
 use \Firebase\JWT\JWT;
 
 function isAuth(Request $request, Response $response, $next) {
+
    global $app;
    $authHeader = $request->getHeader('authorization');
    if ($authHeader && sizeof($authHeader) > 0) {
@@ -29,9 +30,17 @@ function isAuth(Request $request, Response $response, $next) {
          }
        } catch(Exception $exc) {
          return $response->withStatus(401)
-            ->withJson(['exc' => $exc, "msg" => "need a valid authentication"]);
+            ->withJson(['exc' => $exc, "msg" => "need a valid authentication", 'jwt' => $jwt]);
        }
      }
    }
    return $response->withStatus(401)->withJson("need authentication");
 };
+
+function allowAuthorizationHeader(Request $request, Response $response, $next) {
+  $response = $next($request, $response);
+  return $response->withAddedHeader('Access-Control-Expose-Headers', 'authorization')
+    ->withHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
+    ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS')
+    ->withHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, authorization');
+}

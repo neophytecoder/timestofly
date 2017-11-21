@@ -1,5 +1,6 @@
 import React from 'react';
-import { List, Datagrid, EmailField, TextField, SimpleForm, DisabledInput, TextInput, LongTextInput, Edit, EditButton, Create} from 'admin-on-rest';
+import { List, Datagrid, EmailField, TextField, SimpleForm, DisabledInput, ImageField,
+    TextInput, LongTextInput, ImageInput, Edit, EditButton, Create} from 'admin-on-rest';
 import { timeStampToDate } from '../utils';
 import { host } from '../constants';
 import RichTextInput from 'aor-rich-text-input';
@@ -31,6 +32,9 @@ export const BlogEdit = (props) => (
             <DisabledInput source="blogid" />
             <TextInput source="title" />
             <RichTextInput source="content" />
+            <ImageInput source="mediaurl" label="Media" accept="image/*">
+              <ImageField source="mediaurl" />
+            </ImageInput>
         </SimpleForm>
     </Edit>
 );
@@ -40,6 +44,9 @@ export const BlogCreate = (props) => (
         <SimpleForm>
             <TextInput source="title" />
             <RichTextInput source="content" />
+            <ImageInput source="mediaurl" label="Media" accept="image/*">
+              <ImageField source="mediaurl"/>
+            </ImageInput>
         </SimpleForm>
     </Create>
 );

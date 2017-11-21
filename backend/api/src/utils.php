@@ -1,5 +1,7 @@
 <?php
 
+use Slim\Http\UploadedFile;
+
 function getConfig() {
   return require __DIR__ . '/config.php';
 }
@@ -51,4 +53,20 @@ function getToken($length)
     }
 
     return $token;
+}
+
+function moveUploadedFile($directory, UploadedFile $uploadedFile, $basename) {
+    $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
+    $filename = sprintf('%s.%0.8s', $basename, $extension);
+
+    $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
+
+    return $filename;
+}
+
+function saveBase64File($directory, $basename, $data) {
+  $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data));
+  $filename = $basename . '.png';
+  file_put_contents($directory . DIRECTORY_SEPARATOR . $filename, $data);
+  return $filename;
 }

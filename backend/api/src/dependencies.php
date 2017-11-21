@@ -34,3 +34,11 @@ $container['db'] = function ($c) {
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     return $pdo;
 };
+
+$container['images_folder'] = __DIR__ . '/../public/images' ;
+$container['big_images_folder'] = __DIR__ . '/../public/images/big' ;
+$container['small_images_folder'] = __DIR__ . '/../public/images/small' ;
+
+$container['images_relative_folder'] = '/images';
+$container['big_images_relative_folder'] = '/images/big';
+$container['small_images_relative_folder'] = '/images/small';

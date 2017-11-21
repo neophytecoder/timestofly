@@ -1,0 +1,307 @@
+@font-face {
+    font-family: 'HouseScript';
+    src: url('../fonts/SignPainter-HouseScript.ttf')  format('truetype'),
+          url('../fonts/SignPainter-HouseScript.woff') format('woff'),
+          url('../fonts/SignPainter-HouseScript.eot')  format('embedded-opentype');
+}
+
+@font-face {
+    font-family: 'Mustardo';
+    src: url('../fonts/mustardo.ttf')  format('truetype'),
+          url('../fonts/mustardo.ttf') format('woff'),
+          url('../fonts/mustardo.ttf')  format('embedded-opentype');
+}
+
+.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+
+  > .col,
+  > [class*="col-"] {
+    padding-right: 0;
+    padding-left: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+.content {
+  font-family: "Lato light";
+  font-size: 1rem;
+}
+
+.font-lato {
+  font-family: "Lato";
+}
+
+.font-lato-light {
+  font-family: "Lato Light";
+}
+
+.font-sz-1 {
+  font-size: 1rem;
+}
+
+.font-sz-2 {
+  font-size: 2rem;
+}
+
+.font-sz-3 {
+  font-size: 3rem;
+}
+
+.font-sz-4 {
+  font-size: 4rem;
+}
+
+.font-sz-5 {
+  font-size: 5rem;
+}
+
+.font-sz-6 {
+  font-size: 6rem;
+}
+
+.cursive {
+  font-family: "Mustardo";
+}
+
+.line-height-2 {
+  line-height: 2;
+}
+
+.line-height-12 {
+  line-height: 1.2;
+}
+
+.bg-black {
+  background-color: black
+}
+
+/*.BigFont {
+  font-size: 3rem;
+  font-family: "Lato";
+}*/
+
+/*.BigFont .Cursive {
+  font-family: "HouseScript";
+  font-size: 3.6rem;
+  padding: 0 0.5rem;
+}*/
+/*
+.BigFont .White {
+  color: white;
+  font-size: 4rem;
+}*/
+
+/*.BigFont .Smaller {
+  font-size: 2rem;
+}
+
+.MediumFont {
+  font-size: 2.5rem;
+  font-family: "Lato";
+}*/
+/*
+.MediumFont.Black {
+  color: black;
+}*/
+/*
+.Cursive {
+  font-family: "HouseScript";
+}*/
+
+.vertical-line-white {
+  border-left: 1px solid white;
+}
+
+.Group_2_copy {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 1920px;
+  height: 976px;
+  z-index: 23;
+}
+
+.Apply_Now {
+  font-size: 2rem;
+  font-family: "Myriad Pro";
+  margin: 3rem;
+}
+
+.btn.empty {
+  background: none;
+  color: black;
+  font-weight: bold;
+  font-family: "Lato";
+  padding-left: 3rem;
+  padding-right: 3rem;
+  border: 2px solid black;
+}
+
+.btn.empty:hover {
+  color: white;
+  background: black;
+  font-weight: bold;
+}
+
+.btn.empty.full{
+  width: 100%;
+}
+
+
+.btn.empty.white{
+  border: 1px solid white;
+  color: white
+}
+
+
+
+input[type=text] {
+  border: none;
+  border-bottom: 2px solid white;
+  background: transparent;
+  color: white;
+}
+
+input[type=text]:focus {
+  border: none;
+  border-bottom: 3px solid white;
+  background: transparent;
+  color: white;
+}
+
+textarea.form-control {
+  background:transparent;
+  border:2px solid white;
+  color:#fff;
+}
+
+textarea:focus.form-control {
+  background:transparent;
+  border:3px solid white;
+  color:#fff;
+}
+
+label {
+  color: white
+}
+
+.contact-us-bg {
+  background-image: url('../OriginalImage.png');
+  overflow-y: scroll;
+  background-repeat: repeat;
+  background-position: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.transparent-bg {
+  background-color: rgba(0, 0, 0, 0.659);
+  overflow-y: scroll;
+  background-repeat: repeat;
+  background-position: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+
+.rectangle {
+  width: 1px;
+  background: white;
+  height: auto;
+}
+
+/*.our_service {
+  color: white;
+  font-size: 0.6rem;
+  background-color: black;
+  margin-bottom: 1rem;
+}*/
+
+.our_service .title {
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.our_service .content {
+  font-size: 0.5rem;
+}
+
+.our_service_contact-us {
+  background-image: url('../sky_colors-wide.png');
+  background-repeat: no-repeat;
+  background-position: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  font-family: "Lato light";
+}
+
+.our_service_contact-us .Cursive {
+  font-size: 4.5rem;
+  font-family: "HouseScript";
+  font-weight: bold;
+}
+
+.our_service_contact-us .btn-empty {
+  font-size: 1rem;
+  font-family: "Lato";
+  font-weight: bold;
+  border: 1px solid black;
+}
+
+.awesome-works {
+  background-image: url('../wood.png');
+  background-repeat: no-repeat;
+  background-position: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.nav-bg {
+  background-image: url('../OAYTM70.png');
+  background-repeat: no-repeat;
+  background-position: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.nav-tabs-customs .nav-item .nav-link {
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  background: none;
+  color: black;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border-left: none;
+  border-right: none;
+}
+
+.nav-tabs-customs .nav-item .nav-link:hover {
+  background: black;
+  color: white;
+}
+
+.nav-tabs-customs .nav-item .nav-link.active {
+  background: black;
+  color: white;
+}
+
+.rotate90 {
+  transform: rotate(90deg);
+}

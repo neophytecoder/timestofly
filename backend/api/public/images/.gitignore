@@ -1,0 +1,9 @@
+*.png
+*.jpg
+*.jpeg
+big/*.png
+big/*.jpg
+big/*.jpeg
+small/*.png
+small/*.jpg
+small/*.jpeg
