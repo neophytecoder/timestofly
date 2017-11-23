@@ -31,50 +31,80 @@ $app->get('/api/works/{id}', function(Request $request, Response $response, $arg
 
 $app->post('/api/works', function (Request $request, Response $response, array $args) {
   $parsedBody = $request->getParsedBody();
-
   $token = getToken(20);
-  $stmt = $this->db->prepare("insert into WORK (name, extrainfo, topic, location, token) values (:name, :extrainfo, :topic, :location, :token)");
-  $stmt->bindParam('name', $parsedBody['name']);
-  $stmt->bindParam('extrainfo', $parsedBody['extrainfo']);
-  $stmt->bindParam('topic', $parsedBody['topic']);
-  $stmt->bindParam('location', $parsedBody['location']);
-  $stmt->bindParam('token', $token);
-  $stmt->execute();
 
-  $parsedBody['token'] = $token;
-  return $response->withJson($parsedBody);
-})->add('isAuth')->add('allowAuthorizationHeader');
+  $smallimage = '';
+  $smallimagevalue = '';
+  if (array_key_exists('smallimage', $parsedBody)) {
+    echo "<br/>small exist<br/>";
+    $smallimage = ' , smallimage ';
+    $smallimagevalue = ' , :smallimage ';
+  }
 
-$app->post('/api/works/{token}/media', function (Request $request, Response $response, array $args) {
-   $smallImageFile = $request->getUploadedFiles()['smallimage'];
-   $bigImageFile = $request->getUploadedFiles()['bigimage'];
+  $bigimage = '';
+  $bigimagevalue = '';
+  if (array_key_exists('bigimage', $parsedBody)) {
+    echo "<br/>big exist<br/>";
+    $bigimage = ' , bigimage ';
+    $bigimagevalue = ' , :bigimage ';
+  }
 
-   if($smallImageFile->getError() === UPLOAD_ERR_OK && $bigImageFile->getError() === UPLOAD_ERR_OK){
-     $stmt = $this->db->prepare("select * from WORK where token=:token");
-     $stmt->bindParam('token', $args['token']);
-     $stmt->execute();
-     $results = $stmt->fetchAll();
+  $query = 'insert into WORK (name, extrainfo, topic, location, token ' . $smallimage . $bigimage . ' ) values (:name, :extrainfo, :topic, :location, :token ' . $smallimagevalue . $bigimagevalue . ' )';
+  echo $query;
+  return $response->withJson(createAndUpdateWork($token, $parsedBody, $query));
+  // $small_directory = $this->get('small_images_folder');
+  // $big_directory = $this->get('big_images_folder');
+  // $smallFilename = saveBase64File($small_directory, $token, $parsedBody['smallimage']);
+  // $bigFilename = saveBase64File($big_directory, $token, $parsedBody['bigimage']);
+  // $smallmediaurl = $this->get('small_images_relative_folder') . DIRECTORY_SEPARATOR . $smallFilename;
+  // $bigmediaurl = $this->get('big_images_relative_folder') . DIRECTORY_SEPARATOR . $bigFilename;
+  //
+  // $stmt = $this->db->prepare("insert into WORK (name, extrainfo, topic, location, token, smallimage, bigimage) values (:name, :extrainfo, :topic, :location, :token, :smallimage, :bigimage)");
+  // $stmt->bindParam('name', $parsedBody['name']);
+  // $stmt->bindParam('extrainfo', $parsedBody['extrainfo']);
+  // $stmt->bindParam('topic', $parsedBody['topic']);
+  // $stmt->bindParam('location', $parsedBody['location']);
+  // $stmt->bindParam('token', $token);
+  // $stmt->bindParam('smallimage', $smallmediaurl);
+  // $stmt->bindParam('bigimage', $bigmediaurl);
+  // $stmt->execute();
+  //
+  // $parsedBody['token'] = $token;
+  // $parsedBody['smallimage'] = $smallimage;
+  // $parsedBody['bigimage'] = $bigimage;
+  // return $response->withJson($parsedBody);
+});
 
-     if (sizeof($results) > 0 ) {
-       $smallFilename = moveUploadedFile($this->get('small_images_folder'), $smallImageFile, $args['token']);
-       $bigFilename = moveUploadedFile($this->get('big_images_folder'), $bigImageFile, $args['token']);
-       $smallmediaurl = $this->get('small_images_relative_folder') . DIRECTORY_SEPARATOR . $smallFilename;
-       $bigmediaurl = $this->get('big_images_relative_folder') . DIRECTORY_SEPARATOR . $bigFilename;
-
-       $stmt = $this->db->prepare("update WORK set smallimage=:smallimage, bigimage=:bigimage where token=:token");
-       $stmt->bindParam('smallimage', $smallmediaurl);
-       $stmt->bindParam('bigimage', $bigmediaurl);
-       $stmt->bindParam('token', $args['token']);
-       $stmt->execute();
-
-       return $response->withJson([
-         'smallImage' => $smallmediaurl,
-         'bigImage' => $bigmediaurl
-       ]);
-     }
-   }
-   return $response->withStatus(400);
-})->add('isAuth')->add('allowAuthorizationHeader');
+// $app->post('/api/works/{token}/media', function (Request $request, Response $response, array $args) {
+//    $smallImageFile = $request->getUploadedFiles()['smallimage'];
+//    $bigImageFile = $request->getUploadedFiles()['bigimage'];
+//
+//    if($smallImageFile->getError() === UPLOAD_ERR_OK && $bigImageFile->getError() === UPLOAD_ERR_OK){
+//      $stmt = $this->db->prepare("select * from WORK where token=:token");
+//      $stmt->bindParam('token', $args['token']);
+//      $stmt->execute();
+//      $results = $stmt->fetchAll();
+//
+//      if (sizeof($results) > 0 ) {
+//        $smallFilename = moveUploadedFile($this->get('small_images_folder'), $smallImageFile, $args['token']);
+//        $bigFilename = moveUploadedFile($this->get('big_images_folder'), $bigImageFile, $args['token']);
+//        $smallmediaurl = $this->get('small_images_relative_folder') . DIRECTORY_SEPARATOR . $smallFilename;
+//        $bigmediaurl = $this->get('big_images_relative_folder') . DIRECTORY_SEPARATOR . $bigFilename;
+//
+//        $stmt = $this->db->prepare("update WORK set smallimage=:smallimage, bigimage=:bigimage where token=:token");
+//        $stmt->bindParam('smallimage', $smallmediaurl);
+//        $stmt->bindParam('bigimage', $bigmediaurl);
+//        $stmt->bindParam('token', $args['token']);
+//        $stmt->execute();
+//
+//        return $response->withJson([
+//          'smallImage' => $smallmediaurl,
+//          'bigImage' => $bigmediaurl
+//        ]);
+//      }
+//    }
+//    return $response->withStatus(400);
+// })->add('isAuth')->add('allowAuthorizationHeader');
 
 $app->delete('/api/works/{token}', function(Request $request, Response $response, array $args) {
   $stmt = $this->db->prepare('delete from WORK where token=:token');
@@ -86,24 +116,28 @@ $app->delete('/api/works/{token}', function(Request $request, Response $response
 
 $app->put('/api/works/{token}', function(Request $request, Response $response, array $args) {
   $parsedBody = $request->getParsedBody();
-  $mediaurl = $request->getParsedBody()['mediaurl'];
 
-  $directory = $this->get('images_folder');
-  $filename = saveBase64File($directory, $args['blogid'], $mediaurl);
-  $mediaurl = $this->get('images_relative_folder') . DIRECTORY_SEPARATOR . $filename;
-
-
-  $stmt = $this->db->prepare('update WORK set name=:name, extrainfo=:extrainfo, topic=:topic, location=:location  where token=:token');
+  $small_directory = $this->get('small_images_folder');
+  $big_directory = $this->get('big_images_folder');
+  $smallFilename = saveBase64File($small_directory, $token, $parsedBody['smallimage']);
+  $bigFilename = saveBase64File($big_directory, $token, $parsedBody['bigimage']);
+  $smallmediaurl = $this->get('small_images_relative_folder') . DIRECTORY_SEPARATOR . $smallFilename;
+  $bigmediaurl = $this->get('big_images_relative_folder') . DIRECTORY_SEPARATOR . $bigFilename;
+  $stmt = $this->db->prepare("update WORK set name=:name, extrainfo=:extrainfo, topic=:topic, location=:location, smallimage=:smallimage, bigimage=:bigimage where token=:token");
   $stmt->bindParam('name', $parsedBody['name']);
   $stmt->bindParam('extrainfo', $parsedBody['extrainfo']);
   $stmt->bindParam('topic', $parsedBody['topic']);
   $stmt->bindParam('location', $parsedBody['location']);
   $stmt->bindParam('token', $args['token']);
+  $stmt->bindParam('smallimage', $smallmediaurl);
+  $stmt->bindParam('bigimage', $bigmediaurl);
   $stmt->execute();
 
+  $parsedBody['token'] = $args['token'];
+  $parsedBody['smallimage'] = $smallmediaurl;
+  $parsedBody['bigimage'] = $bigmediaurl;
   return $response->withJson($parsedBody);
-})->add('isAuth')->add('allowAuthorizationHeader');
-
+})->add('isAuth');
 
 
 $app->post("/api/auth", function (Request $request, Response $response) {
@@ -166,31 +200,29 @@ $app->any('/api/auth/test',function (Request $request, Response $response, array
   return $response->withJson("test auth");
 })->add('isAuth')->add('allowAuthorizationHeader');
 
+$app->post('/api/blogs/{blogid}/media', function (Request $request, Response $response, array $args) {
+   $uploadedFile = $request->getUploadedFiles()['image'];
+   print_r($uploadedFile);
+   if($uploadedFile->getError() === UPLOAD_ERR_OK) {
+     $directory = $this->get('images_folder');
 
+     $stmt = $this->db->prepare("select * from BLOG where blogid=:blogid");
+     $stmt->bindParam('blogid', $args['blogid']);
+     $stmt->execute();
+     $results = $stmt->fetchAll();
+     if (sizeof($results) > 0 ) {
+       $filename = moveUploadedFile($directory, $uploadedFile, $results[0]['blogid']);
+       $mediaurl = $this->get('images_relative_folder') . DIRECTORY_SEPARATOR . $filename;
 
-// $app->post('/api/blogs/{blogid}/media', function (Request $request, Response $response, array $args) {
-//    $uploadedFile = $request->getUploadedFiles()['image'];
-//    if($uploadedFile->getError() === UPLOAD_ERR_OK){
-//      $directory = $this->get('images_folder');
-//
-//      $stmt = $this->db->prepare("select * from BLOG where blogid=:blogid");
-//      $stmt->bindParam('blogid', $args['blogid']);
-//      $stmt->execute();
-//      $results = $stmt->fetchAll();
-//      if (sizeof($results) > 0 ) {
-//        $filename = moveUploadedFile($directory, $uploadedFile, $results[0]['blogid']);
-//        $mediaurl = $this->get('images_relative_folder') . DIRECTORY_SEPARATOR . $filename;
-//
-//        $stmt = $this->db->prepare("update BLOG set mediaurl=:mediaurl where blogid=:blogid");
-//        $stmt->bindParam('mediaurl', $mediaurl);
-//        $stmt->bindParam('blogid', $args['blogid']);
-//        $stmt->execute();
-//
-//        return $response->withJson($filename);
-//      }
-//    }
-//    return $response->withStatus(400);
-// })->add('isAuth');
+       $stmt = $this->db->prepare("update BLOG set mediaurl=:mediaurl where blogid=:blogid");
+       $stmt->bindParam('mediaurl', $mediaurl);
+       $stmt->bindParam('blogid', $args['blogid']);
+       $stmt->execute();
+       return $response->withStatus(200)->withJson($filename);
+     }
+   }
+   return $response->withStatus(500)->withJson('failed');
+})->add('isAuth');
 
 $app->delete('/api/blogs/{blogid}', function(Request $request, Response $response, array $args) {
   $stmt = $this->db->prepare('delete from blog where blogid=:blogid');
@@ -217,25 +249,22 @@ $app->put('/api/blogs/{blogid}', function(Request $request, Response $response, 
   $parsedBody = $request->getParsedBody();
   $title = $parsedBody['title'];
   $content = $parsedBody['content'];
-  $mediaurl = $parsedBody['mediaurl'];
-  // echo $title;
-  // echo $content;
+  // $mediaurl = $parsedBody['mediaurl'];
 
-  $directory = $this->get('images_folder');
-  $filename = saveBase64File($directory, $args['blogid'], $mediaurl);
-  $mediaurl = $this->get('images_relative_folder') . DIRECTORY_SEPARATOR . $filename;
+  // $directory = $this->get('images_folder');
+  // $filename = saveBase64File($directory, $args['blogid'], $mediaurl);
+  // $mediaurl = $this->get('images_relative_folder') . DIRECTORY_SEPARATOR . $filename;
 
-  $stmt = $this->db->prepare('update blog set title=:title, content=:content, mediaurl=:mediaurl where blogid=:blogid');
+  $stmt = $this->db->prepare('update blog set title=:title, content=:content where blogid=:blogid');
   $stmt->bindParam('blogid', $args['blogid']);
   $stmt->bindParam('title', $title);
   $stmt->bindParam('content', $content);
-  $stmt->bindParam('mediaurl', $mediaurl);
+  // $stmt->bindParam('mediaurl', $mediaurl);
   $stmt->execute();
 
   return $response->withJson([
     'title' => $title,
-    'content' => $content,
-    'mediaurl' => $mediaurl
+    'content' => $content
   ]);
 })->add('isAuth');
 
@@ -243,17 +272,12 @@ $app->post('/api/blogs', function (Request $request, Response $response, array $
   $parsedBody = $request->getParsedBody();
 
   $token = getToken(20);
-  $directory = $this->get('images_folder');
-  $filename = saveBase64File($directory, $token, $parsedBody['mediaurl']);
-  $mediaurl = $this->get('images_relative_folder') . DIRECTORY_SEPARATOR . $filename;
-
   $time = time();
-  $stmt = $this->db->prepare("insert into BLOG (TITLE, CONTENT, POSTED, BLOGID, MEDIAURL) values (:title, :content, :posted, :blogid, :mediaurl)");
+  $stmt = $this->db->prepare("insert into BLOG (TITLE, CONTENT, POSTED, BLOGID) values (:title, :content, :posted, :blogid)");
   $stmt->bindParam('title', $parsedBody['title']);
   $stmt->bindParam('content', $parsedBody['content']);
   $stmt->bindParam('posted', $time);
   $stmt->bindParam('blogid', $token);
-  $stmt->bindParam('mediaurl', $mediaurl);
   $stmt->execute();
 
   return $response->withJson([
@@ -261,7 +285,6 @@ $app->post('/api/blogs', function (Request $request, Response $response, array $
     'content' => $parsedBody['content'],
     'posted' => $time,
     'blogid' => $token,
-    'mediaurl' => $mediaurl
   ]);
 })->add('isAuth');
 

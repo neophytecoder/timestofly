@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Datagrid, EmailField, TextField, SimpleForm, DisabledInput, TextInput, LongTextInput, Edit, EditButton, Create} from 'admin-on-rest';
+import { List, Datagrid, ImageField, TextField, SimpleForm, DisabledInput, TextInput, ImageInput, Edit, EditButton, Create} from 'admin-on-rest';
 import { timeStampToDate } from '../utils';
 import { host } from '../constants';
 import RichTextInput from 'aor-rich-text-input';
@@ -14,7 +14,7 @@ export const WorkList = (props) => {
             <TextField source="extrainfo" style={miniStyle}  />
             <TextField source="topic" style={miniStyle}  />
             <CustomImageField source="smallimage" size="small" />
-            <CustomImageField source="bigimage" size="small" />
+            <CustomImageField source="bigimage" size="big" />
             <TextField source="location" />
             <EditButton />
         </Datagrid>
@@ -34,17 +34,31 @@ export const WorkEdit = (props) => (
             <TextInput source="extrainfo" style={miniStyle}  />
             <TextInput source="topic" style={miniStyle}  />
             <TextInput source="location" />
+            <ImageInput source="smallimage" label="Small image" accept="image/*">
+              <ImageField source="smallimage" />
+            </ImageInput>
+            <CustomImageField source="smallimage" size="small" />
+            <ImageInput source="bigimage" label="Big Image" accept="image/*">
+              <ImageField source="bigimage" />
+            </ImageInput>
+            <CustomImageField source="bigimage" size="big" />
         </SimpleForm>
     </Edit>
 );
 
 export const WorkCreate = (props) => (
     <Create title="edit" {...props}>
-        <SimpleForm>
+      <SimpleForm>
         <TextInput source="name" />
         <TextInput source="extrainfo" style={miniStyle}  />
         <TextInput source="topic" style={miniStyle}  />
         <TextInput source="location" />
-        </SimpleForm>
+        <ImageInput source="smallimage" label="Small image" accept="image/*">
+          <ImageField source="smallimage" />
+        </ImageInput>
+        <ImageInput source="bigimage" label="Big image" accept="image/*">
+          <ImageField source="bigimage" />
+        </ImageInput>
+      </SimpleForm>
     </Create>
 );

@@ -5,6 +5,7 @@ import BlogComponent from './blog';
 import BlogDetailComponent from './blog/blogDetail';
 import ContactUsComponent from './contact'
 import MyAdmin from './admin';
+import { BlogUploadImage } from './admin/blogs';
 
 class RouteComponent extends Component {
   render() {

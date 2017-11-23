@@ -70,3 +70,37 @@ function saveBase64File($directory, $basename, $data) {
   file_put_contents($directory . DIRECTORY_SEPARATOR . $filename, $data);
   return $filename;
 }
+
+function createAndUpdateWork($token, $parsedBody, $query) {
+  global $app;
+
+  $small_directory = $app->getContainer()->get('small_images_folder');
+  $big_directory = $app->getContainer()->get('big_images_folder');
+  if (array_key_exists('smallimage', $parsedBody)) {
+    $smallFilename = saveBase64File($small_directory, $token, $parsedBody['smallimage']);
+    $smallmediaurl = $app->getContainer()->get('small_images_relative_folder') . DIRECTORY_SEPARATOR . $smallFilename;
+  }
+  if (array_key_exists('bigimage', $parsedBody)) {
+    $bigFilename = saveBase64File($big_directory, $token, $parsedBody['bigimage']);
+    $bigmediaurl = $app->getContainer()->get('big_images_relative_folder') . DIRECTORY_SEPARATOR . $bigFilename;
+  }
+
+  $stmt = $app->getContainer()->get('db')->prepare($query);
+  $stmt->bindParam('name', $parsedBody['name']);
+  $stmt->bindParam('extrainfo', $parsedBody['extrainfo']);
+  $stmt->bindParam('topic', $parsedBody['topic']);
+  $stmt->bindParam('location', $parsedBody['location']);
+  $stmt->bindParam('token', $token);
+  if (array_key_exists('smallimage', $parsedBody)) {
+    $stmt->bindParam('smallimage', $smallmediaurl);
+  }
+  if (array_key_exists('bigimage', $parsedBody)) {
+    $stmt->bindParam('bigimage', $bigmediaurl);
+  }
+  $stmt->execute();
+
+  $parsedBody['token'] = $token;
+  $parsedBody['smallimage'] = $smallmediaurl;
+  $parsedBody['bigimage'] = $bigmediaurl;
+  return $parsedBody;
+}
