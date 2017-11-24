@@ -49,7 +49,6 @@ const BlogShowActions = withRouter(({ basePath, data, refresh, history }) => (
           <EditButton basePath={basePath} record={data} />
           <ListButton basePath={basePath} />
           <DeleteButton basePath={basePath} record={data} />
-          <FlatButton primary label="Refresh" onClick={refresh} icon={<NavigationRefresh />} />
           <FlatButton primary label="Upload Image" onClick={changeBlogImage(basePath, data, history)} />
       </CardActions>
 ));

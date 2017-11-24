@@ -2,7 +2,7 @@ import { host, headers } from '../constants';
 
 export const SET_BLOGS = "SET_BLOGS";
 
-export const setBlogs = (blogs) => ({
+export const setBlogs = (blogs = []) => ({
   type: SET_BLOGS,
   blogs
 });

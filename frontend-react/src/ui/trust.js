@@ -6,28 +6,28 @@ const Trust = (props) => (
       They <span className="cursive mx-1">Trust</span> Us
     </div>
     <div className="w-100 p-4"></div>
-    <div className="col-md-1 col-2"><img className="img-fluid" src="assets/hec.png"  /> </div>
-    <div className="col-md-1 col-2"><img className="img-fluid" src="assets/ibu.png"  /> </div>
-    <div className="col-md-1 col-2"><img className="img-fluid" src="assets/paragon.png"  /> </div>
-    <div className="col-md-1 col-2 pt-3"><img className="img-fluid" src="assets/lusaga.png"  /> </div>
-    <div className="col-md-1 col-2 pt-2"><img className="img-fluid" src="assets/Layer6.png"  /> </div>
-    <div className="col-md-1 col-2 pt-2"><img className="img-fluid" src="assets/globe-rent-a-car.png"  /> </div>
+    <div className="col-md-1 col-2"><img className="img-fluid" src={require("../assets/images/hec.png")}  /> </div>
+    <div className="col-md-1 col-2"><img className="img-fluid" src={require("../assets/images/ibu.png")}  /> </div>
+    <div className="col-md-1 col-2"><img className="img-fluid" src={require("../assets/images/paragon.png")}  /> </div>
+    <div className="col-md-1 col-2 pt-3"><img className="img-fluid" src={require("../assets/images/lusaga.png")}  /> </div>
+    <div className="col-md-1 col-2 pt-2"><img className="img-fluid" src={require("../assets/images/Layer6.png")}  /> </div>
+    <div className="col-md-1 col-2 pt-2"><img className="img-fluid" src={require("../assets/images/globe-rent-a-car.png")}  /> </div>
     <div className="w-100"></div>
-    <div className="col-md-1 col-2 pt-2"><img className="img-fluid" src="assets/Logo-HS-FA.png"  /> </div>
+    <div className="col-md-1 col-2 pt-2"><img className="img-fluid" src={require("../assets/images/Logo-HS-FA.png")}  /> </div>
     <div className="col-md-1 col-2 text-center">
-      <img className="img-fluid mh-50 h-50" src="assets/Logo-PDG.png"  />
+      <img className="img-fluid mh-50 h-50" src={require("../assets/images/Logo-PDG.png")}  />
     </div>
     <div className="col-md-1 col-2 text-center">
-      <img className="img-fluid mh-50 h-50" src="assets/emerald.png"  />
+      <img className="img-fluid mh-50 h-50" src={require("../assets/images/emerald.png")}  />
     </div>
     <div className="col-md-1 col-2 text-center">
-      <img className="img-fluid mh-50 h-50 w-100 mw-100" src="assets/city.png"  />
+      <img className="img-fluid mh-50 h-50 w-100 mw-100" src={require("../assets/images/city.png")}  />
     </div>
     <div className="col-md-1 col-2 text-center">
-      <img className="img-fluid mh-50 h-50" src="assets/Layer4.png"/>
+      <img className="img-fluid mh-50 h-50" src={require("../assets/images/Layer4.png")} />
     </div>
-    <div className="col-md-1 col-2 pt-2"><img className="img-fluid" src="assets/Layer5.png"  /> </div>
-    <div className="w-100 p-2" ></div>
+    <div className="col-md-1 col-2 pt-2"><img className="img-fluid" src={require("../assets/images/Layer5.png")}  /> </div>
+    <div className="w-100" style={{padding: "1rem"}}></div>
   </div>
 );
 

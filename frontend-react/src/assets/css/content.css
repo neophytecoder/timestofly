@@ -68,6 +68,11 @@
   font-size: 7rem;
 }
 
+.font-sz-8 {
+  font-size: 8rem;
+}
+
+
 .font-sz-9 {
   font-size: 9.3rem;
 }
@@ -328,4 +333,16 @@ label {
 
 .black-link:hover {
   color: gray;
+}
+
+.white-link {
+  color: white;
+}
+
+.white-link.active {
+  color: white;
+}
+
+.white-link:hover {
+  color: white;
 }

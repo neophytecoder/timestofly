@@ -9,9 +9,11 @@ import thunk from 'redux-thunk';
 import {Provider} from 'react-redux';
 
 import { blogReducers } from './blog/reducers';
+import { workReducers } from './works/reducers';
 
 const rootReducer = combineReducers({
   'blogs': blogReducers,
+  'works': workReducers,
 });
 
 const store = createStore(

@@ -28,7 +28,7 @@ class SmallBlogComponent extends Component {
           <div className="w-100 mt-3"></div>
           <div style={{fontSize: "14pt"}}>
             <Truncate lines={3}>
-              {this.props.content}
+            <div dangerouslySetInnerHTML={ {__html: this.props.content} }></div>
             </Truncate>
           </div>
 
